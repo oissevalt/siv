@@ -3,6 +3,7 @@ package siv
 import (
 	"errors"
 	"iter"
+	"slices"
 )
 
 var (
@@ -152,4 +153,11 @@ func (s *SIV[T]) Iter2() iter.Seq2[Handle[T], T] {
 			}
 		}
 	}
+}
+
+// Slice calls [slices.Clone] on the underlying data slice, whose elements
+// do not necessarily follow the same order as how they are added.
+// For a lazy-yielding iterator, see Iter and Iter2.
+func (s *SIV[T]) Slice() []T {
+	return slices.Clone(s.data)
 }
